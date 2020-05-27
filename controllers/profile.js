@@ -1,0 +1,19 @@
+const handleProfileGet = (knex) => (req, res) =>{
+	const {id} = req.params;
+	knex('users').where({
+	 id: id
+	}).select('*')
+	.then(user => {
+		console.log(user)
+		if(user.length) {
+			res.json(user[0])
+		} else {
+			res.status(400).json('Not found')
+		}
+	})
+	.catch(err => res.status(400).json('Error getting user'))
+}
+
+module.exports = {
+	handleProfileGet: handleProfileGet
+}
